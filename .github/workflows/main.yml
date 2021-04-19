@@ -18,10 +18,10 @@ jobs:
           dotnet-version: "3.1.102"
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release --no-restore ./myapp
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o myapp
 
       - name: Azure Login
         uses: azure/login@v1.1
@@ -33,4 +33,4 @@ jobs:
         with:
           app-name: "appexemplocommandline"
           slot-name: "production"
-          package: ${{env.DOTNET_ROOT}}/myapp
+          package: './myapp'
