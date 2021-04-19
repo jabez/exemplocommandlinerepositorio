@@ -19,11 +19,11 @@ jobs:
         with:
           dotnet-version: "3.1.102"
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
-      - name: dotnet publish
-        run: dotnet publish -c Release -o '${{env.AZURE_WEBAPP_PATH}}/myapp'
+      - name: dotnet build and publish
+        run: |
+          dotnet restore
+          dotnet build --configuration Release
+          dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PATH }}/myapp'
 
       - name: Azure Login
         uses: azure/login@v1.1
