@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-
+env:
+  AZURE_WEBAPP_PATH: '.'
+  
 jobs:
   build-and-deploy:
     runs-on: windows-latest
@@ -21,7 +23,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o ${{env.AZURE_WEBAPP_PATH}}/myapp
 
       - name: Azure Login
         uses: azure/login@v1.1
@@ -33,4 +35,4 @@ jobs:
         with:
           app-name: "appexemplocommandline"
           slot-name: "production"
-          package: ${{env.DOTNET_ROOT}}/myapp
+          package: ${{env.AZURE_WEBAPP_PATH}}/myapp
